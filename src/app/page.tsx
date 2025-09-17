@@ -1,6 +1,7 @@
 import Layout from '@/components/layout/Layout';
 import Section from '@/components/layout/Section';
 import { Button, Card, CardHeader, CardTitle, CardContent, Icon, Heading, Text } from '@/components/ui';
+import Link from 'next/link';
 
 export default function Home() {
   return (
@@ -15,9 +16,11 @@ export default function Home() {
             법인설립부터 각종 허가까지 모든 행정업무를 안전하게 대행해드립니다.
           </Text>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button variant="primary" size="lg">
-              상담 신청하기
-            </Button>
+            <Link href="/consultation">
+              <Button variant="primary" size="lg">
+                상담 신청하기
+              </Button>
+            </Link>
             <Button variant="outline" size="lg">
               서비스 안내
             </Button>
@@ -219,9 +222,11 @@ export default function Home() {
             전문 행정사가 직접 상담하고 맞춤형 솔루션을 제공합니다.
           </Text>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button variant="primary" size="lg" className="shadow-lg">
-              상담 신청하기
-            </Button>
+            <Link href="/consultation">
+              <Button variant="primary" size="lg" className="shadow-lg">
+                상담 신청하기
+              </Button>
+            </Link>
             <Button
               variant="outline"
               size="lg"

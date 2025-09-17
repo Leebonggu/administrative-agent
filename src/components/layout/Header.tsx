@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -11,7 +12,9 @@ export default function Header() {
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
             <div className="flex-shrink-0">
-              <h1 className="text-xl font-bold text-slate-900">인허가닷컴</h1>
+              <Link href="/">
+                <h1 className="text-xl font-bold text-slate-900 cursor-pointer hover:text-primary-600 transition-colors">인허가닷컴</h1>
+              </Link>
             </div>
           </div>
 
