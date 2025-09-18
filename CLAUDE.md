@@ -49,4 +49,48 @@ npm run lint     # ESLint 실행
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 ADMIN_PASSWORD=your_admin_password
+NEXT_PUBLIC_BASE_URL=https://admin-work-site.vercel.app  # SEO 메타데이터용
 ```
+
+## SEO 최적화 (2025-01-19 완료)
+
+### 메타데이터 및 구조화된 데이터
+- **메인 레이아웃** (`src/app/layout.tsx`): 전문 행정사 키워드, Open Graph, Twitter Cards
+- **상담 페이지** (`src/app/consultation/layout.tsx`): 상담 전용 메타데이터
+- **구조화된 데이터**: LegalService + ProfessionalService + Organization 스키마
+- **FAQ 스키마** (`src/app/page.tsx`): 자주 묻는 질문 구조화 데이터
+
+### 검색엔진 최적화 파일
+- **사이트맵**: `src/app/sitemap.ts` - 자동 생성
+- **로봇 규칙**: `src/app/robots.ts` - 관리자/API 경로 차단
+- **언어 설정**: 한국어 (ko) 설정 완료
+
+### 주요 SEO 키워드
+- 핵심: "행정사, 인허가, 법인설립, 사업자등록"
+- 전문: "건설업허가, 일반음식점허가, 화물운송업허가, 외국인투자신고"
+- 지역: "서울행정사, 경기행정사, 서울특별시 강서구 마곡"
+- 신뢰도: "전문 행정사"
+
+### 변경 가능한 콘텐츠 위치
+
+#### FAQ 섹션 (`src/app/page.tsx`)
+- **위치**: 메인 페이지 FAQ 섹션 (라인 217-273)
+- **구조화 데이터**: faqStructuredData 객체 (라인 7-44)
+- **변경 시 주의**: JSON-LD 스키마도 함께 업데이트 필요
+
+#### Footer 정보 (`src/components/layout/Footer.tsx`)
+- **사무소 정보**: 라인 18 - 주소 (현재: 서울특별시 강서구 마곡)
+- **자격증 정보**: 라인 30 - 행정사 자격 번호 및 개업연도
+- **영업시간**: 라인 24 - 운영시간 정보
+- **전문분야 태그**: 라인 57-61 - 행정법, 상법, 건설업법
+
+#### 비즈니스 정보 업데이트 시 연동 필요
+1. **메타데이터** (`src/app/layout.tsx` 라인 22-26): 지역 정보
+2. **구조화된 데이터** (`src/app/layout.tsx` 라인 93-97): 주소 정보
+3. **사이트맵/로봇** (`src/app/sitemap.ts`, `src/app/robots.ts`): 도메인 정보
+
+### SEO 성과 지표
+- 구조화된 데이터: 비즈니스, FAQ, 서비스 카탈로그
+- 메타데이터: 완전한 Open Graph, Twitter Cards
+- 기술적 SEO: 사이트맵, 로봇, 언어 설정 완료
+- 평점 정보: 실제 리뷰 발생 시 추가 예정 (현재 미포함)

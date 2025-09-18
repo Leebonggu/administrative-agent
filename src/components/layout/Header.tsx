@@ -13,7 +13,7 @@ export default function Header() {
           <div className="flex items-center">
             <div className="flex-shrink-0">
               <Link href="/">
-                <h1 className="text-xl font-bold text-slate-900 cursor-pointer hover:text-primary-600 transition-colors">인허가닷컴</h1>
+                <img src="/logo.png" alt="인허가닷컴" className="h-10 w-auto cursor-pointer hover:opacity-80 transition-opacity" />
               </Link>
             </div>
           </div>

@@ -4,8 +4,54 @@ import { Button, Card, CardHeader, CardTitle, CardContent, Icon, Heading, Text }
 import Link from 'next/link';
 
 export default function Home() {
+  const faqStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "법인 설립에 필요한 서류는 무엇인가요?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "법인 설립 시 필요한 주요 서류는 정관, 주주명부, 이사회 결의서, 대표이사 취임승낙서 등이 있습니다. 법인 형태와 업종에 따라 추가 서류가 필요할 수 있으며, 상담을 통해 정확한 서류 목록을 안내해드립니다."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "인허가 처리 기간은 얼마나 걸리나요?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "인허가 종류에 따라 처리 기간이 다릅니다. 일반음식점 허가는 약 7-14일, 건설업 허가는 약 30-45일, 화물운송업 허가는 약 20-30일 정도 소요됩니다. 정확한 기간은 관할 기관과 서류 준비 상황에 따라 달라질 수 있습니다."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "상담 비용이 있나요?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "초기 상담은 무료로 제공해드립니다. 상담을 통해 고객님의 상황을 파악한 후 정확한 견적을 제시해드리며, 투명한 비용 구조로 안내해드립니다."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "외국인도 법인 설립이 가능한가요?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "네, 외국인도 한국에서 법인 설립이 가능합니다. 외국인투자신고, 체류자격 확인 등 추가 절차가 필요하며, 관련 서류 준비부터 설립 완료까지 전 과정을 지원해드립니다."
+        }
+      }
+    ]
+  };
+
   return (
-    <Layout>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(faqStructuredData),
+        }}
+      />
+      <Layout>
       <Section background="gray" padding="xl">
         <div className="text-center mb-16">
           <Heading level={1}>
@@ -214,6 +260,65 @@ export default function Home() {
         </div>
       </Section>
 
+      <Section background="white" padding="xl">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-16">
+            <Heading level={2}>자주 묻는 질문</Heading>
+            <Text size="lg" color="secondary">고객님들이 자주 문의하시는 질문들을 모았습니다</Text>
+          </div>
+
+          <div className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>법인 설립에 필요한 서류는 무엇인가요?</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <Text>
+                  법인 설립 시 필요한 주요 서류는 정관, 주주명부, 이사회 결의서, 대표이사 취임승낙서 등이 있습니다.
+                  법인 형태와 업종에 따라 추가 서류가 필요할 수 있으며, 상담을 통해 정확한 서류 목록을 안내해드립니다.
+                </Text>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>인허가 처리 기간은 얼마나 걸리나요?</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <Text>
+                  인허가 종류에 따라 처리 기간이 다릅니다. 일반음식점 허가는 약 7-14일, 건설업 허가는 약 30-45일,
+                  화물운송업 허가는 약 20-30일 정도 소요됩니다. 정확한 기간은 관할 기관과 서류 준비 상황에 따라 달라질 수 있습니다.
+                </Text>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>상담 비용이 있나요?</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <Text>
+                  초기 상담은 무료로 제공해드립니다. 상담을 통해 고객님의 상황을 파악한 후
+                  정확한 견적을 제시해드리며, 투명한 비용 구조로 안내해드립니다.
+                </Text>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>외국인도 법인 설립이 가능한가요?</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <Text>
+                  네, 외국인도 한국에서 법인 설립이 가능합니다. 외국인투자신고, 체류자격 확인 등
+                  추가 절차가 필요하며, 관련 서류 준비부터 설립 완료까지 전 과정을 지원해드립니다.
+                </Text>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </Section>
+
       <Section background="blue" padding="xl">
         <div className="max-w-4xl mx-auto text-center">
           <Heading level={2} className="text-primary-900 mb-6">전문적인 인허가 서비스</Heading>
@@ -238,6 +343,7 @@ export default function Home() {
         </div>
       </Section>
 
-    </Layout>
+      </Layout>
+    </>
   );
 }
