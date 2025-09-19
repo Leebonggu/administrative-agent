@@ -6,7 +6,7 @@ export default function Footer() {
           <div className="col-span-1 md:col-span-2">
             <h3 className="text-lg font-semibold mb-4">행정사 전문 사무소</h3>
             <p className="text-slate-300 mb-4">
-              20년 경력의 전문 행정사가 인허가, 법인설립, 사업자등록 등
+              전문 행정사가 인허가, 법인설립, 사업자등록 등
               모든 행정업무를 신속하고 정확하게 대행해드립니다.
             </p>
             <div className="space-y-2 text-sm text-slate-300">
