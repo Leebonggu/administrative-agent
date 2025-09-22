@@ -61,13 +61,13 @@ export default function Home() {
             복잡한 인허가 업무를 전문적으로 처리하고, 고객에게 신뢰할 수 있는 서비스를 제공합니다.
             법인설립부터 각종 허가까지 모든 행정업무를 안전하게 대행해드립니다.
           </Text>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-4 sm:justify-center">
             <Link href="/consultation">
-              <Button variant="primary" size="lg">
+              <Button variant="primary" size="lg" className="w-full sm:w-48">
                 상담 신청하기
               </Button>
             </Link>
-            <Button variant="outline" size="lg">
+            <Button variant="outline" size="lg" className="w-full sm:w-40">
               서비스 안내
             </Button>
           </div>
@@ -326,16 +326,16 @@ export default function Home() {
             복잡한 인허가 업무를 신속하고 정확하게 처리해드립니다.
             전문 행정사가 직접 상담하고 맞춤형 솔루션을 제공합니다.
           </Text>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-4 sm:justify-center">
             <Link href="/consultation">
-              <Button variant="primary" size="lg" className="shadow-lg">
+              <Button variant="primary" size="lg" className="w-full sm:w-48 shadow-lg">
                 상담 신청하기
               </Button>
             </Link>
             <Button
               variant="outline"
               size="lg"
-              className="border-primary-600 text-primary-600 hover:bg-primary-600 hover:text-white hover:border-primary-600"
+              className="w-full sm:w-40 border-primary-600 text-primary-600 hover:bg-primary-600 hover:text-white hover:border-primary-600"
             >
               견적 문의하기
             </Button>

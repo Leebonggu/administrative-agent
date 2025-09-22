@@ -14,6 +14,7 @@ CREATE TABLE consultations (
   service_type VARCHAR(50) NOT NULL,
   message TEXT NOT NULL,
   privacy_agreed BOOLEAN NOT NULL DEFAULT false,
+  status VARCHAR(20) NOT NULL DEFAULT 'pending',
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
@@ -32,3 +33,8 @@ CREATE POLICY "Anyone can select consultations" ON consultations
 -- 인덱스 생성 (검색 최적화)
 CREATE INDEX idx_consultations_created_at ON consultations(created_at DESC);
 CREATE INDEX idx_consultations_service_type ON consultations(service_type);
+CREATE INDEX idx_consultations_status ON consultations(status);
+
+-- UPDATE 정책 추가 (관리자가 status 업데이트 가능하도록)
+CREATE POLICY "Anyone can update consultations" ON consultations
+  FOR UPDATE USING (true);

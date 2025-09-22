@@ -178,12 +178,12 @@ export default function ConsultationPage() {
                   </div>
                 </div>
 
-                <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                  <Button type="submit" variant="primary" size="lg" className="flex-1" disabled={isSubmitting}>
+                <div className="flex flex-col sm:flex-row gap-4 pt-4 sm:justify-center">
+                  <Button type="submit" variant="primary" size="lg" className="w-full sm:w-48" disabled={isSubmitting}>
                     {isSubmitting ? '신청 중...' : '상담 신청하기'}
                   </Button>
                   <Link href="/">
-                    <Button type="button" variant="outline" size="lg" className="flex-1">
+                    <Button type="button" variant="outline" size="lg" className="w-full sm:w-32">
                       취소
                     </Button>
                   </Link>
