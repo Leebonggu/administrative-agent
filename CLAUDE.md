@@ -49,7 +49,7 @@ npm run lint     # ESLint 실행
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 ADMIN_PASSWORD=your_admin_password
-NEXT_PUBLIC_BASE_URL=https://admin-work-site.vercel.app  # SEO 메타데이터용
+NEXT_PUBLIC_BASE_URL=https://administrative-agent.vercel.app  # SEO 메타데이터용
 ```
 
 ## SEO 최적화 (2025-01-19 완료)
@@ -66,10 +66,10 @@ NEXT_PUBLIC_BASE_URL=https://admin-work-site.vercel.app  # SEO 메타데이터�
 - **언어 설정**: 한국어 (ko) 설정 완료
 
 ### 주요 SEO 키워드
-- 핵심: "행정사, 인허가, 법인설립, 사업자등록"
+- 핵심: "이민구, 이민구 행정사, 행정사이민구, 이민구행정사, 행정사, 인허가, 법인설립, 사업자등록"
 - 전문: "건설업허가, 일반음식점허가, 화물운송업허가, 외국인투자신고"
 - 지역: "서울행정사, 경기행정사, 서울특별시 강서구 마곡"
-- 신뢰도: "전문 행정사"
+- 전문가: "인허가 이민구, 이민구 인허가, 행정사 인허가, 인허가 전문가 이민구"
 
 ### 변경 가능한 콘텐츠 위치
 

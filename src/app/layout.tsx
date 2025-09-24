@@ -13,11 +13,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://admin-work-site.vercel.app'),
-  title: "행정사 전문 사무소 | 인허가·법인설립·사업자등록 대행 서비스",
-  description: "전문 행정사가 인허가, 법인설립, 사업자등록, 건설업허가, 음식점허가 등 모든 행정업무를 신속하고 정확하게 대행해드립니다.",
-  keywords: "행정사, 인허가, 법인설립, 사업자등록, 건설업허가, 일반음식점허가, 화물운송업허가, 외국인투자신고, 공증업무, 행정심판, 인허가대행, 행정업무대행, 전문행정사, 서울행정사, 경기행정사",
-  authors: [{ name: "행정사 전문 사무소" }],
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://administrative-agent.vercel.app'),
+  title: "이민구 행정사 사무소 | 인허가·법인설립·사업자등록 대행 서비스",
+  description: "이민구 행정사가 인허가, 법인설립, 사업자등록, 건설업허가, 음식점허가 등 모든 행정업무를 신속하고 정확하게 대행해드립니다.",
+  keywords: "이민구, 이민구 행정사, 행정사이민구, 이민구행정사, 행정사, 인허가 이민구, 이민구 인허가, 행정사 인허가, 인허가 전문가 이민구, 인허가, 법인설립, 사업자등록, 건설업허가, 일반음식점허가, 화물운송업허가, 외국인투자신고, 공증업무, 행정심판, 인허가대행, 행정업무대행, 전문행정사, 서울행정사, 경기행정사",
+  authors: [{ name: "이민구 행정사" }],
   category: "Professional Services",
   other: {
     "business:contact_data:locality": "서울",
@@ -26,24 +26,24 @@ export const metadata: Metadata = {
     "og:type": "business.business",
   },
   openGraph: {
-    title: "행정사 전문 사무소 | 인허가·법인설립·사업자등록 대행 서비스",
-    description: "전문 행정사가 인허가, 법인설립, 사업자등록 등 모든 행정업무를 신속하고 정확하게 대행해드립니다.",
+    title: "이민구 행정사 사무소 | 인허가·법인설립·사업자등록 대행 서비스",
+    description: "이민구 행정사가 인허가, 법인설립, 사업자등록 등 모든 행정업무를 신속하고 정확하게 대행해드립니다.",
     type: "website",
     locale: "ko_KR",
-    siteName: "행정사 전문 사무소",
+    siteName: "이민구 행정사 사무소",
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "행정사 전문 사무소 - 인허가 업무 대행",
+        alt: "이민구 행정사 사무소 - 인허가 업무 대행",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "행정사 전문 사무소 | 인허가·법인설립·사업자등록 대행 서비스",
-    description: "전문 행정사가 모든 행정업무를 신속하고 정확하게 대행해드립니다.",
+    title: "이민구 행정사 사무소 | 인허가·법인설립·사업자등록 대행 서비스",
+    description: "이민구 행정사가 모든 행정업무를 신속하고 정확하게 대행해드립니다.",
     images: ["/og-image.png"],
   },
   robots: {
@@ -67,12 +67,12 @@ export default function RootLayout({
   const structuredData = {
     "@context": "https://schema.org",
     "@type": ["LegalService", "ProfessionalService", "Organization"],
-    "name": "행정사 전문 사무소",
-    "alternateName": "인허가닷컴",
-    "description": "전문 행정사가 인허가, 법인설립, 사업자등록, 건설업허가, 음식점허가 등 모든 행정업무를 신속하고 정확하게 대행해드립니다.",
-    "url": "https://admin-work-site.vercel.app",
-    "logo": "https://admin-work-site.vercel.app/logo.png",
-    "image": "https://admin-work-site.vercel.app/og-image.png",
+    "name": "이민구 행정사 사무소",
+    "alternateName": ["이민구 행정사", "인허가닷컴"],
+    "description": "이민구 행정사가 인허가, 법인설립, 사업자등록, 건설업허가, 음식점허가 등 모든 행정업무를 신속하고 정확하게 대행해드립니다.",
+    "url": "https://administrative-agent.vercel.app",
+    "logo": "https://administrative-agent.vercel.app/logo.png",
+    "image": "https://administrative-agent.vercel.app/og-image.png",
     "serviceType": [
       "법인 설립 및 관리",
       "사업자등록 및 신고",
