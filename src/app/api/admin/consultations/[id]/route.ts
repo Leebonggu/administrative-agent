@@ -1,39 +1,33 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
+import jwt from 'jsonwebtoken';
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    // Basic Auth 확인
+    // JWT 토큰 인증
     const authHeader = request.headers.get('authorization');
-    if (!authHeader || !authHeader.startsWith('Basic ')) {
-      return new NextResponse('Unauthorized', {
-        status: 401,
-        headers: {
-          'WWW-Authenticate': 'Basic realm="Admin Area"'
-        }
-      });
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return new NextResponse('Unauthorized', { status: 401 });
     }
 
-    const base64Credentials = authHeader.split(' ')[1];
-    const credentials = Buffer.from(base64Credentials, 'base64').toString('ascii');
-    const [username, password] = credentials.split(':');
+    const token = authHeader.split(' ')[1];
+    const JWT_SECRET = process.env.JWT_SECRET || 'fallback-secret';
 
-    const adminPassword = process.env.ADMIN_PASSWORD || 'admin123';
-
-    if (username !== 'admin' || password !== adminPassword) {
-      return new NextResponse('Unauthorized', {
-        status: 401,
-        headers: {
-          'WWW-Authenticate': 'Basic realm="Admin Area"'
-        }
-      });
+    try {
+      const decoded = jwt.verify(token, JWT_SECRET) as any;
+      if (!decoded.role || decoded.role !== 'admin') {
+        return new NextResponse('Unauthorized', { status: 401 });
+      }
+    } catch (jwtError) {
+      return new NextResponse('Unauthorized', { status: 401 });
     }
 
     const { status } = await request.json();
-    const consultationId = params.id;
+    const { id } = await params;
+    const consultationId = id;
 
     // status 유효성 검사
     if (!['pending', 'completed'].includes(status)) {

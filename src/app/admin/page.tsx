@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import Layout from '@/components/layout/Layout';
 import Section from '@/components/layout/Section';
 import { Card, CardHeader, CardTitle, CardContent, Heading, Text } from '@/components/ui';
@@ -27,29 +28,83 @@ export default function AdminPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [jwtToken, setJwtToken] = useState<string>('');
+  const [isMounted, setIsMounted] = useState(false);
+
+  // 컴포넌트 마운트 시 저장된 토큰 확인
+  useEffect(() => {
+    setIsMounted(true);
+    if (typeof window !== 'undefined') {
+      const savedToken = localStorage.getItem('adminToken');
+      if (savedToken) {
+        setJwtToken(savedToken);
+        setIsAuthenticated(true);
+        fetchConsultations(savedToken);
+      } else {
+        setLoading(false);
+      }
+    }
+  }, []);
   const [sortField, setSortField] = useState<SortField>('created_at');
   const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (password === 'admin123') { // 임시 비밀번호
-      setIsAuthenticated(true);
-      fetchConsultations();
-    } else {
-      alert('비밀번호가 잘못되었습니다.');
+
+    try {
+      const response = await fetch('/api/admin/auth', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setJwtToken(data.token);
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('adminToken', data.token);
+        }
+        setIsAuthenticated(true);
+        fetchConsultations(data.token);
+      } else {
+        alert('아이디 또는 비밀번호가 잘못되었습니다.');
+      }
+    } catch (error) {
+      alert('로그인 중 오류가 발생했습니다.');
     }
   };
 
-  const fetchConsultations = async () => {
+  const fetchConsultations = async (token?: string) => {
     try {
       setLoading(true);
-      const response = await fetch('/api/admin/consultations');
+      const currentToken = token || jwtToken;
+      const response = await fetch('/api/admin/consultations', {
+        headers: {
+          'Authorization': `Bearer ${currentToken}`,
+        },
+      });
+
+      if (response.status === 401) {
+        // 토큰이 만료되었거나 유효하지 않음
+        if (typeof window !== 'undefined') {
+          localStorage.removeItem('adminToken');
+        }
+        setIsAuthenticated(false);
+        setJwtToken('');
+        setError('세션이 만료되었습니다. 다시 로그인해주세요.');
+        return;
+      }
+
       if (!response.ok) {
         throw new Error('데이터를 불러오는데 실패했습니다.');
       }
       const data = await response.json();
       setConsultations(data);
+      setError(null); // 성공 시 에러 초기화
     } catch (error) {
       setError(error instanceof Error ? error.message : '알 수 없는 오류가 발생했습니다.');
     } finally {
@@ -63,9 +118,21 @@ export default function AdminPage() {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${jwtToken}`,
         },
         body: JSON.stringify({ status: newStatus }),
       });
+
+      if (response.status === 401) {
+        // 토큰이 만료되었거나 유효하지 않음
+        if (typeof window !== 'undefined') {
+          localStorage.removeItem('adminToken');
+        }
+        setIsAuthenticated(false);
+        setJwtToken('');
+        alert('세션이 만료되었습니다. 다시 로그인해주세요.');
+        return;
+      }
 
       if (!response.ok) {
         throw new Error('상태 업데이트에 실패했습니다.');
@@ -129,6 +196,21 @@ export default function AdminPage() {
       <span className="text-primary-600">↓</span>;
   };
 
+  // 컴포넌트가 마운트되기 전까지는 로딩 상태를 표시
+  if (!isMounted) {
+    return (
+      <Layout>
+        <Section background="gray" padding="xl">
+          <Card>
+            <CardContent>
+              <Text className="text-center py-8">로딩 중...</Text>
+            </CardContent>
+          </Card>
+        </Section>
+      </Layout>
+    );
+  }
+
   if (!isAuthenticated) {
     return (
       <Layout>
@@ -140,6 +222,20 @@ export default function AdminPage() {
               </CardHeader>
               <CardContent>
                 <form onSubmit={handleLogin} className="space-y-4">
+                  <div>
+                    <label htmlFor="username" className="block text-sm font-medium text-slate-700 mb-2">
+                      아이디
+                    </label>
+                    <input
+                      type="text"
+                      id="username"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
+                      className="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500"
+                      placeholder="아이디를 입력하세요"
+                      required
+                    />
+                  </div>
                   <div>
                     <label htmlFor="password" className="block text-sm font-medium text-slate-700 mb-2">
                       비밀번호
@@ -176,15 +272,21 @@ export default function AdminPage() {
           <div className="flex justify-between items-center mb-8">
             <Heading level={1}>상담 신청 관리</Heading>
             <div className="flex gap-4">
-              <a
+              <Link
                 href="/api/admin/consultations/export"
-                className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md transition-colors"
+                className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-md transition-colors font-medium text-sm"
               >
                 CSV 내보내기
-              </a>
+              </Link>
               <button
-                onClick={() => setIsAuthenticated(false)}
-                className="bg-slate-600 hover:bg-slate-700 text-white px-4 py-2 rounded-md transition-colors"
+                onClick={() => {
+                  setIsAuthenticated(false);
+                  setJwtToken('');
+                  if (typeof window !== 'undefined') {
+                    localStorage.removeItem('adminToken');
+                  }
+                }}
+                className="bg-slate-600 hover:bg-slate-700 text-white px-6 py-3 rounded-md transition-colors font-medium text-sm"
               >
                 로그아웃
               </button>
@@ -309,7 +411,7 @@ export default function AdminPage() {
                                 consultation.id,
                                 consultation.status === 'pending' ? 'completed' : 'pending'
                               )}
-                              className={`px-3 py-1 text-xs font-medium rounded transition-colors ${
+                              className={`px-4 py-2 text-sm font-medium rounded transition-colors ${
                                 consultation.status === 'pending'
                                   ? 'bg-green-600 hover:bg-green-700 text-white'
                                   : 'bg-yellow-600 hover:bg-yellow-700 text-white'

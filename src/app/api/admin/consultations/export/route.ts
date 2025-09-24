@@ -15,9 +15,9 @@ export async function GET(request: NextRequest) {
 
   const base64Credentials = authHeader.split(' ')[1];
   const credentials = Buffer.from(base64Credentials, 'base64').toString('ascii');
-  const [username, password] = credentials.split(':');
+  const [, password] = credentials.split(':');
 
-  const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin123';
+  const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 
   if (password !== ADMIN_PASSWORD) {
     return new Response('Invalid credentials', {

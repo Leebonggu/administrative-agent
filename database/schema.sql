@@ -38,3 +38,34 @@ CREATE INDEX idx_consultations_status ON consultations(status);
 -- UPDATE 정책 추가 (관리자가 status 업데이트 가능하도록)
 CREATE POLICY "Anyone can update consultations" ON consultations
   FOR UPDATE USING (true);
+
+
+-- 관리자 테이블 생성
+CREATE TABLE admins (
+  id SERIAL PRIMARY KEY,
+  username VARCHAR(50) UNIQUE NOT NULL,
+  email VARCHAR(255) UNIQUE NOT NULL,
+  password_hash VARCHAR(255) NOT NULL,
+  role VARCHAR(20) NOT NULL DEFAULT 'admin',
+  is_active BOOLEAN NOT NULL DEFAULT true,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  last_login_at TIMESTAMP WITH TIME ZONE
+);
+
+-- RLS (Row Level Security) 활성화
+ALTER TABLE admins ENABLE ROW LEVEL SECURITY;
+
+-- 관리자만 admins 테이블에 접근 가능하도록 정책 생성
+CREATE POLICY "Only admins can access admin data" ON admins
+  FOR ALL USING (auth.jwt() ->> 'role' = 'admin');
+
+-- 인덱스 생성
+CREATE INDEX idx_admins_username ON admins(username);
+CREATE INDEX idx_admins_email ON admins(email);
+CREATE INDEX idx_admins_is_active ON admins(is_active);
+
+-- 기본 관리자 계정 생성 (비밀번호: admin123)
+-- bcrypt hash for 'admin123' with salt rounds 12
+INSERT INTO admins (username, email, password_hash, role) VALUES
+('admin', 'admin@example.com', '$2b$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewCwMmUlmKxrBp3C', 'admin');

@@ -67,7 +67,7 @@ export default function Home() {
                 상담 신청하기
               </Button>
             </Link>
-            <Button variant="outline" size="lg" className="w-full sm:w-40">
+            <Button variant="outline" size="lg" className="w-full sm:w-48">
               서비스 안내
             </Button>
           </div>
@@ -335,7 +335,7 @@ export default function Home() {
             <Button
               variant="outline"
               size="lg"
-              className="w-full sm:w-40 border-primary-600 text-primary-600 hover:bg-primary-600 hover:text-white hover:border-primary-600"
+              className="w-full sm:w-48 border-primary-600 text-primary-600 hover:bg-primary-600 hover:text-white hover:border-primary-600"
             >
               견적 문의하기
             </Button>

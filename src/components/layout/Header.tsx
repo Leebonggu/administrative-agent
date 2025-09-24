@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -13,7 +14,7 @@ export default function Header() {
           <div className="flex items-center">
             <div className="flex-shrink-0">
               <Link href="/">
-                <img src="/logo.png" alt="인허가닷컴" className="h-10 w-auto cursor-pointer hover:opacity-80 transition-opacity" />
+                <Image src="/logo.png" alt="인허가닷컴" width={60} height={60} className="cursor-pointer hover:opacity-80 transition-opacity" />
               </Link>
             </div>
           </div>
@@ -21,25 +22,7 @@ export default function Header() {
           <nav className="hidden md:flex items-center">
             <div className="flex items-baseline space-x-8">
               <a
-                href="#"
-                className="text-slate-700 hover:text-primary-600 px-3 py-2 text-sm font-medium transition-colors"
-              >
-                서비스
-              </a>
-              <a
-                href="#"
-                className="text-slate-700 hover:text-primary-600 px-3 py-2 text-sm font-medium transition-colors"
-              >
-                기능
-              </a>
-              <a
-                href="#"
-                className="text-slate-700 hover:text-primary-600 px-3 py-2 text-sm font-medium transition-colors"
-              >
-                고객지원
-              </a>
-              <a
-                href="#"
+                href="/consultation"
                 className="text-slate-700 hover:text-primary-600 px-3 py-2 text-sm font-medium transition-colors"
               >
                 문의하기
