@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://administrative-agent.vercel.app'),
   title: "이민구 행정사 사무소 | 인허가·법인설립·사업자등록 대행 서비스",
   description: "이민구 행정사가 인허가, 법인설립, 사업자등록, 건설업허가, 음식점허가 등 모든 행정업무를 신속하고 정확하게 대행해드립니다.",
-  keywords: "이민구, 이민구 행정사, 행정사이민구, 이민구행정사, 행정사, 인허가 이민구, 이민구 인허가, 행정사 인허가, 인허가 전문가 이민구, 인허가, 법인설립, 사업자등록, 건설업허가, 일반음식점허가, 화물운송업허가, 외국인투자신고, 공증업무, 행정심판, 인허가대행, 행정업무대행, 전문행정사, 서울행정사, 경기행정사",
+  keywords: "인허가닷컴, 이민구, 이민구 행정사, 행정사이민구, 이민구행정사, 행정사, 인허가 이민구, 이민구 인허가, 행정사 인허가, 인허가 전문가 이민구, 인허가, 법인설립, 사업자등록, 건설업허가, 일반음식점허가, 화물운송업허가, 외국인투자신고, 공증업무, 행정심판, 인허가대행, 행정업무대행, 전문행정사, 서울행정사, 경기행정사",
   authors: [{ name: "이민구 행정사" }],
   category: "Professional Services",
   other: {
@@ -68,7 +68,7 @@ export default function RootLayout({
     "@context": "https://schema.org",
     "@type": ["LegalService", "ProfessionalService", "Organization"],
     "name": "이민구 행정사 사무소",
-    "alternateName": ["이민구 행정사", "인허가닷컴"],
+    "alternateName": ["이민구 행정사", "인허가닷컴", "인허가.com"],
     "description": "이민구 행정사가 인허가, 법인설립, 사업자등록, 건설업허가, 음식점허가 등 모든 행정업무를 신속하고 정확하게 대행해드립니다.",
     "url": "https://administrative-agent.vercel.app",
     "logo": "https://administrative-agent.vercel.app/logo.png",
