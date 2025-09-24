@@ -16,11 +16,11 @@ export async function POST(request: NextRequest) {
 
     let decoded;
     try {
-      decoded = jwt.verify(token, JWT_SECRET) as any;
+      decoded = jwt.verify(token, JWT_SECRET) as jwt.JwtPayload;
       if (!decoded.role || decoded.role !== 'admin') {
         return new NextResponse('Unauthorized', { status: 401 });
       }
-    } catch (jwtError) {
+    } catch {
       return new NextResponse('Unauthorized', { status: 401 });
     }
 

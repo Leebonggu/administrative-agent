@@ -17,11 +17,11 @@ export async function PATCH(
     const JWT_SECRET = process.env.JWT_SECRET || 'fallback-secret';
 
     try {
-      const decoded = jwt.verify(token, JWT_SECRET) as any;
+      const decoded = jwt.verify(token, JWT_SECRET) as jwt.JwtPayload;
       if (!decoded.role || decoded.role !== 'admin') {
         return new NextResponse('Unauthorized', { status: 401 });
       }
-    } catch (jwtError) {
+    } catch {
       return new NextResponse('Unauthorized', { status: 401 });
     }
 

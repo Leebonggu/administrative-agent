@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import Layout from '@/components/layout/Layout';
 import Section from '@/components/layout/Section';
@@ -32,53 +32,10 @@ export default function AdminPage() {
   const [password, setPassword] = useState('');
   const [jwtToken, setJwtToken] = useState<string>('');
   const [isMounted, setIsMounted] = useState(false);
-
-  // 컴포넌트 마운트 시 저장된 토큰 확인
-  useEffect(() => {
-    setIsMounted(true);
-    if (typeof window !== 'undefined') {
-      const savedToken = localStorage.getItem('adminToken');
-      if (savedToken) {
-        setJwtToken(savedToken);
-        setIsAuthenticated(true);
-        fetchConsultations(savedToken);
-      } else {
-        setLoading(false);
-      }
-    }
-  }, []);
   const [sortField, setSortField] = useState<SortField>('created_at');
   const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
 
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    try {
-      const response = await fetch('/api/admin/auth', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, password }),
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        setJwtToken(data.token);
-        if (typeof window !== 'undefined') {
-          localStorage.setItem('adminToken', data.token);
-        }
-        setIsAuthenticated(true);
-        fetchConsultations(data.token);
-      } else {
-        alert('아이디 또는 비밀번호가 잘못되었습니다.');
-      }
-    } catch (error) {
-      alert('로그인 중 오류가 발생했습니다.');
-    }
-  };
-
-  const fetchConsultations = async (token?: string) => {
+  const fetchConsultations = useCallback(async (token?: string) => {
     try {
       setLoading(true);
       const currentToken = token || jwtToken;
@@ -105,10 +62,53 @@ export default function AdminPage() {
       const data = await response.json();
       setConsultations(data);
       setError(null); // 성공 시 에러 초기화
-    } catch (error) {
-      setError(error instanceof Error ? error.message : '알 수 없는 오류가 발생했습니다.');
+    } catch (fetchError) {
+      setError(fetchError instanceof Error ? fetchError.message : '알 수 없는 오류가 발생했습니다.');
     } finally {
       setLoading(false);
+    }
+  }, [jwtToken]);
+
+  // 컴포넌트 마운트 시 저장된 토큰 확인
+  useEffect(() => {
+    setIsMounted(true);
+    if (typeof window !== 'undefined') {
+      const savedToken = localStorage.getItem('adminToken');
+      if (savedToken) {
+        setJwtToken(savedToken);
+        setIsAuthenticated(true);
+        fetchConsultations(savedToken);
+      } else {
+        setLoading(false);
+      }
+    }
+  }, [fetchConsultations]);
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch('/api/admin/auth', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setJwtToken(data.token);
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('adminToken', data.token);
+        }
+        setIsAuthenticated(true);
+        fetchConsultations(data.token);
+      } else {
+        alert('아이디 또는 비밀번호가 잘못되었습니다.');
+      }
+    } catch {
+      alert('로그인 중 오류가 발생했습니다.');
     }
   };
 
